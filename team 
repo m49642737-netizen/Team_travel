@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Time Travel Game</title>
+
+  <style>
+    body { background:#111; display:flex; justify-content:center; align-items:center; height:100vh; }
+    canvas { background:#222; }
+  </style>
+</head>
+
+<body>
+
+<h1 style="color:white; position:absolute; top:10px;">Time Travel Game</h1>
+
+<canvas id="game"></canvas>
+
+<script>
+class TimeTravelGame {
+    constructor() {
+        this.canvas = document.getElementById('game');
+        this.ctx = this.canvas.getContext('2d');
+        this.canvas.width = 800;
+        this.canvas.height = 600;
+        this.canvas.tabIndex = -1;
+        this.canvas.focus();
+
+        this.state = 'menu';
+        this.tutorialMode = false;
+        this.currentEra = '';
+        this.parts = 0;
+        this.maxParts = 7;
+        this.frame = 0;
+        this.potionSpawnCD = 0;
+        this.killCount = 0;
+        this.bossSpawned = false;
+
+        this.player = {
+            x: 400, y: 300, w: 20, h: 20,
+            vx: 0, vy: 0, angle: 0,
+            hp: 100, maxhp: 100, shootCD: 0,
+            powerups: { strEnd: -1, staEnd: -1, luckEnd: -1 }
+        };
+
+        this.playerBullets = [];
+        this.enemyBullets = [];
+        this.enemies = [];
+        this.potions = [];
+        this.eraButtons = [];
+
+        this.eras = [
+            { name: 'Египет', boss: 'Рамзес', color: '#F4A460' },
+            { name: 'Будущее', boss: 'Хакер', color: '#4169E1' },
+            { name: 'Атлантида', boss: 'РУСАЛ', color: '#00BFFF' },
+            { name: 'Средневековье', boss: 'Викинг', color: '#228B22' },
+            { name: 'Юрский период', boss: 'Ти-Рекс', color: '#556B2F' },
+            { name: 'Дикий Запад', boss: 'Бандит', color: '#D2691E' },
+            { name: 'Космос', boss: 'Инопланетянин', color: '#000033' }
+        ];
+
+        this.keys = {};
+        this.setupEvents();
+    }
+
+    setupEvents() {
+        this.canvas.addEventListener('click', (e) => this.handleClick(e));
+
+        document.addEventListener('keydown', (e) => {
+            e.preventDefault();
+            this.keys[e.code] = true;
+        });
+
+        document.addEventListener('keyup', (e) => {
+            e.preventDefault();
+            this.keys[e.code] = false;
+        });
+    }
+
+    getMousePos(e) {
+        const rect = this.canvas.getBoundingClientRect();
+        return {
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+        };
+    }
+
+    handleClick(e) {
+        const pos = this.getMousePos(e);
+        // тут — логика кликов
+    }
+}
+
+const game = new TimeTravelGame();
+</script>
+
+</body>
+</html>
